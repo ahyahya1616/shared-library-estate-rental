@@ -1,23 +1,12 @@
 def call(Map config) {
 
     pipeline {
-
-        agent {
-            label 'docker-kind'
-        }
+        agent { label 'docker-kind' }
 
         environment {
             SERVICE_NAME = config.serviceName
             IMAGE_NAME   = config.imageName
-            JAR_NAME     = config.jarName
-            PORT         = config.port
-
             BUILD_TAG    = "${env.BUILD_NUMBER}"
-        }
-
-        tools {
-            maven 'maven-3.9'
-            jdk 'jdk-17'
         }
 
         stages {
@@ -25,15 +14,6 @@ def call(Map config) {
             stage('Checkout Source Code') {
                 steps {
                     checkout scm
-                }
-            }
-
-            stage('Build Application (Maven)') {
-                steps {
-                    script {
-                        def maven = new ma.fstt.estateRental.MavenUtils(this)
-                        maven.build()
-                    }
                 }
             }
 

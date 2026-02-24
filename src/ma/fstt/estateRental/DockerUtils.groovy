@@ -12,7 +12,7 @@ class DockerUtils {
         script.echo "Construction de l'image Docker : ${imageName}:${tag}"
 
         script.sh """
-            docker build -t ${imageName}:${tag} .
+            docker build --pull -t ${imageName}:${tag} .
             docker tag ${imageName}:${tag} ${imageName}:latest
         """
     }
