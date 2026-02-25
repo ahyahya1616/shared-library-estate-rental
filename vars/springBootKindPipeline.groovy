@@ -1,13 +1,18 @@
 def call(Map config) {
 
+    if (!config.serviceName || !config.imageName) {
+        error "serviceName et imageName sont obligatoires"
+    }
     pipeline {
-        agent { label 'docker-kind' }
+        agent any
 
         environment {
             SERVICE_NAME = config.serviceName
             IMAGE_NAME   = config.imageName
             BUILD_TAG    = "${env.BUILD_NUMBER}"
         }
+
+
 
         stages {
 
@@ -20,8 +25,8 @@ def call(Map config) {
             stage('Build Docker Image') {
                 steps {
                     script {
-                        def docker = new ma.fstt.estateRental.DockerUtils(this)
-                        docker.buildImage(IMAGE_NAME, BUILD_TAG)
+                        def dockerUtils = new ma.fstt.estateRental.DockerUtils(this)
+                        dockerUtils.buildImage(IMAGE_NAME, BUILD_TAG)
                     }
                 }
             }
