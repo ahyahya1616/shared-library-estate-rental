@@ -3,16 +3,21 @@ def call(Map config) {
     if (!config.serviceName || !config.imageName) {
         error "serviceName et imageName sont obligatoires"
     }
+
     pipeline {
-        agent any
+
+        agent {
+            docker {
+                image 'ci-tools:latest'
+                args '-v /var/run/docker.sock:/var/run/docker.sock -v C:/Users/YLS/.kube:/root/.kube'
+            }
+        }
 
         environment {
             SERVICE_NAME = config.serviceName
             IMAGE_NAME   = config.imageName
             BUILD_TAG    = "${env.BUILD_NUMBER}"
         }
-
-
 
         stages {
 
