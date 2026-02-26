@@ -13,13 +13,17 @@ def call(Map config) {
             }
         }
 
-        environment {
-            SERVICE_NAME = config.serviceName
-            IMAGE_NAME   = config.imageName
-            BUILD_TAG    = "${env.BUILD_NUMBER}"
-        }
-
         stages {
+
+            stage('Init') {
+                steps {
+                    script {
+                        env.SERVICE_NAME = config.serviceName
+                        env.IMAGE_NAME   = config.imageName
+                        env.BUILD_TAG    = env.BUILD_NUMBER
+                    }
+                }
+            }
 
             stage('Checkout Source Code') {
                 steps {
