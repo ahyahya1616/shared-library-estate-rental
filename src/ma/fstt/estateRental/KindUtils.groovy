@@ -9,10 +9,16 @@ class KindUtils {
     }
 
     def loadImage(String imageName, String tag) {
-        script.echo "Chargement de l'image ${imageName}:${tag} dans KIND"
+        script.echo "Chargement de l'image ${imageName}:${tag} dans KIND et déploiement avec Helm"
 
+        // Étape 1 : charger l'image locale dans Kind
         script.sh """
-            helm upgrade --install  ${imageName} chart/ --set image.tag=${BUILD_NUMBER}       
+            kind load docker-image ${imageName}:${tag}
+        """
+
+        // Étape 2 : déployer via Helm sur Kind
+        script.sh """
+            helm upgrade --install ${imageName} chart/ --set image.tag=${tag}
         """
     }
 }
