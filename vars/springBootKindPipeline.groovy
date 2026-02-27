@@ -9,7 +9,8 @@ def call(Map config) {
         agent {
             docker {
                 image 'ci-tools-kind-kubectl-docker:latest'
-                args '-v /var/run/docker.sock:/var/run/docker.sock -v C:/Users/YLS/.kube:/root/.kube'
+                args '-v /var/run/docker.sock:/var/run/docker.sock'
+                reuseNode true
             }
         }
 
