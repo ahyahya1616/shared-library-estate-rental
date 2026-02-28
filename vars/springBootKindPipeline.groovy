@@ -11,7 +11,6 @@ def call(Map config) {
                 image 'ci-tools:latest'
                 args '-v /var/run/docker.sock:/var/run/docker.sock'
                 reuseNode true
-                alwaysPull true
             }
         }
 
