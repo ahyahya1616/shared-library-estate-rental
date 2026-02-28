@@ -8,7 +8,7 @@ def call(Map config) {
 
         agent {
             docker {
-                image 'ci-tools-kind-kubectl-docker:latest'
+                image 'ci-tools:latest'
                 args '-v /var/run/docker.sock:/var/run/docker.sock'
                 reuseNode true
             }
