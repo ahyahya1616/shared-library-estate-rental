@@ -15,5 +15,11 @@ class DockerUtils {
             docker build --pull -t ${imageName}:${tag} .
             docker tag ${imageName}:${tag} ${imageName}:latest
         """
+
+        //  Nettoyage immédiat des images <none> (dangling) créées par ce build
+        script.echo "Nettoyage des images orphelines..."
+        script.sh "docker image prune -f"
+
+        script.echo "Construction terminée avec succès."
     }
 }
