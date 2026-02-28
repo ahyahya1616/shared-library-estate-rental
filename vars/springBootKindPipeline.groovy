@@ -53,10 +53,12 @@ def call(Map config) {
 
         post {
             success {
-                echo "Pipeline SUCCESS pour ${SERVICE_NAME} (version ${BUILD_TAG})"
+                // Utilisez env.SERVICE_NAME et env.BUILD_TAG
+                echo "Pipeline SUCCESS pour ${env.SERVICE_NAME} (version ${env.BUILD_TAG})"
             }
             failure {
-                echo "Pipeline FAILED pour ${SERVICE_NAME}"
+                // Même chose ici pour éviter l'erreur
+                echo "Pipeline FAILED pour ${env.SERVICE_NAME}"
             }
         }
     }
